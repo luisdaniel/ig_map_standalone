@@ -1,0 +1,1 @@
+Replace "associations.json" path with url of json.
