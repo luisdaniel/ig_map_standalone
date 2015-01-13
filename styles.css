@@ -1,0 +1,49 @@
+body {
+	background-color: white;
+	font-family: sans-serif, Arial, Helvetica;
+	color: #0C090A;
+}
+
+h1 {
+	color: #0C090A;
+}
+
+p {
+	color: #0C090A;
+}
+
+.node {
+  stroke: #fff;
+  stroke-width: 1px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+#graph_area {
+	width: 100%;
+}
+
+#node_info {
+	width: 30%;
+	height: 600px;
+	float: left;
+}
+
+#node_name {
+	font-size: 2em;
+	margin-bottom: 16px;
+}
+
+#graph {
+	width: 70%;
+	height: 600px;
+	float: right;
+}
+
+svg {
+	top: 0px;
+	left: 0px;
+}
