@@ -22,17 +22,36 @@ p {
   stroke-opacity: .6;
 }
 
+#info_area {
+	display: inline-block;
+	width: 30%;
+}
+
 #graph_area {
-	width: 100%;
+	width: 70%;
+	height: auto;
 }
 
 #node_info {
-	width: 30%;
-	height: 600px;
+	height: 350px;
+	width: 100%;
 	float: left;
+	overflow-y: scroll;
+	border: solid black 3px;
+	padding: 10px
 }
 
-#node_name {
+#related_node_info {
+	height: 350px;
+	width: 100%;
+	float: left;
+	overflow-y: scroll;
+	border: solid black 3px;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+#node_name, #related_node_name {
 	font-size: 2em;
 	margin-bottom: 16px;
 }
