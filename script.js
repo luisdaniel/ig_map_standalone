@@ -61,6 +61,12 @@ d3.json("associations.json", function(error, graph) {
         		.attr("cy", function(d) { return d.y = (d.source.y + d.target.y) * 0.5; });
 	}
 
+	d3.selection.prototype.moveToFront = function() {
+		return this.each(function(){
+			this.parentNode.appendChild(this);
+		});
+	};
+
 	var nodeMap = {};
 	var frozen = false;
 	var linkNodes = [];
@@ -85,10 +91,14 @@ d3.json("associations.json", function(error, graph) {
 	    .linkDistance(400);
 
 	var svg = d3.select("#graph")
-		.append('svg')
+		.append("svg:svg")
 		.attr("width", width)
 		.attr("height", height)
 		.attr("pointer-events", "all")
+		.append('svg:g')
+		.call(d3.behavior.zoom().on("zoom", redraw))
+		.append('svg:g');
+
 
 	var background = svg.append("rect")
 		.attr("fill", "none")
@@ -153,7 +163,7 @@ d3.json("associations.json", function(error, graph) {
 			.attr('r', r)
 			.style('fill', '#fff')
 			.style('stroke', function(d) { return color(d.group); })
-			.style('fill-opacity', .5)
+			.style('fill-opacity', 1)
 			.style('stroke-opacity', .5);
 		d3.select(this)
 			.attr('class', "node active-node")
@@ -161,7 +171,8 @@ d3.json("associations.json", function(error, graph) {
 			.style('fill', function(d) { return color(d.group); })
 			.style('fill-opacity', 1)
 			.style('stroke-opacity', 1)
-			.style('stroke', "#000");
+			.style('stroke', "#000")
+			.moveToFront();
 		link.style("stroke", function(o) {
 				return o.source === d || o.target === d ? "#000" : "#999";
 			}).style("stroke-width", function(o) {
@@ -171,13 +182,13 @@ d3.json("associations.json", function(error, graph) {
 			return isConnected(d, o) ? color(o.group) : "#fff";
 		}).style("stroke", function(o) {
 			return isConnected(d, o) ? "#000" : color(o.group);
-		}).style("fill-opacity", function(o) {
-			return isConnected(d, o) ? 1 : .5;
 		}).style("stroke-opacity", function(o) {
 			return isConnected(d, o) ? 1 : .5;
 		}).classed("selected-node", function(o) {
 			return isConnected(d, o) ? true : false;
-		});
+		}).filter(function(o) {
+			return isConnected(d,o) ? this : null;
+		}).moveToFront();
 		$('#node_name').text(d.name);
 		$('#node_description').text(d.description);
 		$('#related_node_name').text('');
